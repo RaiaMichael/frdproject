@@ -9,10 +9,9 @@ class UserController extends Controller {
     constructor(service) {
         super(service)
         this.login = this.login.bind(this);
+        this.findUser = this.findUser.bind(this);
     }
     async login(req, res) {
-    // console.log("show.........", req.body)
-    // return
     try {
       let response = await this.service.login(req.body);
       return response.statusCode < 400
@@ -27,6 +26,24 @@ class UserController extends Controller {
         .json(errorHelper(statusCode, error.message || error));
     }
     
+}
+async findUser(req, res) {
+  // console.log("show.........", req.body)
+  // return
+  try {
+    let response = await this.service.findUser(req.body);
+    return response.statusCode < 400
+      ? res.status(response.statusCode).send(response)
+      : res
+          .status(response.statusCode)
+          .json(errorHelper(response.statusCode, response.errors));
+  } catch (error) {
+    const statusCode = error.message.match(/cannot execute/i) ? 400 : 500;
+    return res
+      .status(statusCode)
+      .json(errorHelper(statusCode, error.message || error));
+  }
+  
 }
 
   }

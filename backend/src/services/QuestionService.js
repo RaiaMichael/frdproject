@@ -11,8 +11,8 @@ class QuestionService extends Service {
     const pipeline = [
       {
         $match: {
-          subject: ObjectId("633ad59fc83a09cf37a04802"),
-          grade: ObjectId("633ad64ac83a09cf37a0480c"),
+          subject: ObjectId(body.subject),
+          grade: ObjectId(body.grade),
         },
       },
       {
@@ -55,13 +55,13 @@ class QuestionService extends Service {
     ];
     try {
       let item = await this.model.aggregate(pipeline);
-      console.log(item[0].answer)
+      // console.log(item[0].answer)
   
       if (body.answer === item[0].answer) {
-        console.log("good")
+        // console.log("good")
       
       }else {
-        console.log("bad")
+        // console.log("bad")
       }
       return
       if (item)

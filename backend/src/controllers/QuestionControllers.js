@@ -13,6 +13,8 @@ class QuestionController extends Controller {
   }
 
   async findQuestion(req, res) {
+    // console.log("...........",req.body)
+    // return
     try {
       console.log("item---");
       let response = await this.service.findQuestion(req.body);
@@ -33,6 +35,7 @@ class QuestionController extends Controller {
   }
 
   async submitAnswer(req, res) {
+    // console.log("show answer",req.body)
     try {
       let response = await this.service.submitAnswer(req.body);
       
