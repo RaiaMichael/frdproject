@@ -1,0 +1,88 @@
+import Service from "./Service";
+import { ObjectId } from "mongodb";
+
+class QuestionService extends Service {
+  constructor(model) {
+    super(model);
+    this.findQuestion = this.findQuestion.bind(this);
+    this.submitAnswer = this.submitAnswer.bind(this);
+  }
+  async findQuestion(body, populate = [], projection = null) {
+    const pipeline = [
+      {
+        $match: {
+          subject: ObjectId("633ad59fc83a09cf37a04802"),
+          grade: ObjectId("633ad64ac83a09cf37a0480c"),
+        },
+      },
+      {
+        $sample: {
+          size: 1,
+        },
+      },
+    ];
+    try {
+      let item = await this.model.aggregate(pipeline);
+
+      if (item)
+        return {
+          error: false,
+          statusCode: 200,
+          item,
+        };
+      else
+        return {
+          error: true,
+          statusCode: 404,
+        };
+    } catch (errors) {
+      return {
+        error: true,
+        statusCode: 500,
+        errors,
+      };
+    }
+  }
+
+  async submitAnswer(body, populate = [], projection = null) {
+   console.log(body.answer)
+    const pipeline = [
+      {
+        $match: {
+          _id: ObjectId(body._id)
+        },
+      },
+    ];
+    try {
+      let item = await this.model.aggregate(pipeline);
+      console.log(item[0].answer)
+  
+      if (body.answer === item[0].answer) {
+        console.log("good")
+      
+      }else {
+        console.log("bad")
+      }
+      return
+      if (item)
+        return {
+          error: false,
+          statusCode: 200,
+          item,
+        };
+      else
+        return {
+          error: true,
+          statusCode: 404,
+        };
+    } catch (errors) {
+      return {
+        error: true,
+        statusCode: 500,
+        errors,
+      };
+    }
+  }
+}
+
+export default QuestionService;
