@@ -2,6 +2,9 @@ import Controller from "./Controller";
 import Questions from "../models/Questions.js";
 import QuestionService from "../services/QuestionService.js";
 import errorHelper from "../helper/errorHelper";
+import SubjectController from "./SubjectControllers.js";
+import UserControllers from "./UserControllers.js";
+import { ObjectId } from "mongodb";
 
 const questionService = new QuestionService(new Questions().getInstance());
 
@@ -16,7 +19,7 @@ class QuestionController extends Controller {
     // console.log("...........",req.body)
     // return
     try {
-      console.log("item---");
+      
       let response = await this.service.findQuestion(req.body);
 
       if (response.error)
@@ -35,10 +38,58 @@ class QuestionController extends Controller {
   }
 
   async submitAnswer(req, res) {
-    // console.log("show answer",req.body)
+    // console.log(req.body.user)
+    let chineseCounter = 0;
+    let englishCounter = 0;
+    let mathCounter = 0;
+    let commonCounter = 0;
+
     try {
       let response = await this.service.submitAnswer(req.body);
+      let subject = await SubjectController.service.model.find({
+        _id: ObjectId(response.item[0].subject),
+      });
+
+      let user = await UserControllers.service.model.find({
+        _id: ObjectId(req.body.user),
+      });
       
+
+      if (response.correct === true) {
+        if (subject[0].title === "中文") {
+          chineseCounter = user[0].chineseMarks + 10;
+          await UserControllers.service.model.update(
+            {
+              _id: ObjectId(req.body.user),
+            },
+            { chineseMarks: chineseCounter }
+          );
+        } else if (subject[0].title === "英文") {
+          englishCounter = user[0].englishMarks + 10;
+          await UserControllers.service.model.update(
+            {
+              _id: ObjectId(req.body.user),
+            },
+            { englishMarks: englishCounter }
+            );
+        } else if (subject[0].title === "數學") {
+          mathCounter = user[0].mathMarks + 10;
+          await UserControllers.service.model.update(
+            {
+              _id: ObjectId(req.body.user),
+            },
+            { mathMarks: mathCounter }
+            );
+        } else if (subject[0].title === "常識") {
+          commonCounter = user[0].commonMarks + 10;
+          await UserControllers.service.model.update(
+            {
+              _id: ObjectId(req.body.user),
+            },
+            { commonMarks: commonCounter }
+            );
+        }
+      }
       if (response.error)
         return response.statusCode < 400
           ? res.status(response.statusCode).send(response)

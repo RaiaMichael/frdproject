@@ -6,6 +6,7 @@ class UserService extends Service {
     super(model);
     this.login = this.login.bind(this);
     this.findUser = this.findUser.bind(this);
+    this.register = this.register.bind(this);
   }
   async login(body, populate = [], projection = null) {
     // console.log(body);
@@ -22,7 +23,7 @@ class UserService extends Service {
           statusCode: 200,
           item,
         };
-      } else if(item.length === 0) {
+      } else if (item.length === 0) {
         return {
           error: false,
           statusCode: 408,
@@ -41,8 +42,8 @@ class UserService extends Service {
   async findUser(body, populate = [], projection = null) {
     try {
       let item = await this.model.findById(body.user_id);
-// console.log("............",item)
-// return
+      // console.log("............",item)
+      // return
       if (populate.length !== 0) await item.populate(populate);
 
       if (item)
@@ -56,6 +57,35 @@ class UserService extends Service {
           error: true,
           statusCode: 404,
         };
+    } catch (errors) {
+      return {
+        error: true,
+        statusCode: 500,
+        errors,
+      };
+    }
+  }
+  async register(body, populate = [], projection = null) {
+    console.log('body------',body);
+    
+    try {
+      let item = await this.model.create(body);
+      console.log(item);
+
+      // return
+      if (item.length !== 0) {
+        return {
+          error: false,
+          statusCode: 200,
+          item,
+        };
+      } else if (item.length === 0) {
+        return {
+          error: false,
+          statusCode: 408,
+          item,
+        };
+      }
     } catch (errors) {
       return {
         error: true,

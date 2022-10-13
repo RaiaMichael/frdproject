@@ -21,18 +21,22 @@ class Users {
         chineseMarks: {
           type: Number,
           index: true,
+          default: 0
         },
         englishMarks: {
             type: Number,
             index: true,
+            default: 0
           },
         mathMarks: {
             type: Number,
             index: true,
+            default: 0
           },
         commonMarks: {
             type: Number,
             index: true,
+            default: 0
           },
         createdAt: {
           type: Schema.Types.Date,

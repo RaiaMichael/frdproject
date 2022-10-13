@@ -10,7 +10,8 @@ class UserController extends Controller {
         super(service)
         this.login = this.login.bind(this);
         this.findUser = this.findUser.bind(this);
-        
+        this.register = this.register.bind(this);
+
     }
     async login(req, res) {
     try {
@@ -49,8 +50,10 @@ async findUser(req, res) {
 
 
 async register(req, res) {
+  // console.log(req.body)
+  // return
   try {
-    let response = await this.service.login(req.body);
+    let response = await this.service.register(req.body);
     return response.statusCode < 400
       ? res.status(response.statusCode).send(response)
       : res
