@@ -7,6 +7,7 @@ class UserService extends Service {
     this.login = this.login.bind(this);
     this.findUser = this.findUser.bind(this);
     this.register = this.register.bind(this);
+    this.getAllUser = this.getAllUser.bind(this);
   }
   async login(body, populate = [], projection = null) {
     // console.log(body);
@@ -86,6 +87,33 @@ class UserService extends Service {
           item,
         };
       }
+    } catch (errors) {
+      return {
+        error: true,
+        statusCode: 500,
+        errors,
+      };
+    }
+  }
+
+  async getAllUser(body, populate = [], projection = null) {
+    try {
+      let item = await this.model.find();
+      // console.log("............",item)
+      // return
+      if (populate.length !== 0) await item.populate(populate);
+
+      if (item)
+        return {
+          error: false,
+          statusCode: 200,
+          item,
+        };
+      else
+        return {
+          error: true,
+          statusCode: 404,
+        };
     } catch (errors) {
       return {
         error: true,
