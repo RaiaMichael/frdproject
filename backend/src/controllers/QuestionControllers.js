@@ -16,8 +16,7 @@ class QuestionController extends Controller {
   }
 
   async findQuestion(req, res) {
-    // console.log("...........",req.body)
-    // return
+    console.log('---------',req.body)
     try {
       
       let response = await this.service.findQuestion(req.body);
@@ -38,7 +37,7 @@ class QuestionController extends Controller {
   }
 
   async submitAnswer(req, res) {
-    // console.log(req.body.user)
+    console.log(req.session["user"])
     let chineseCounter = 0;
     let englishCounter = 0;
     let mathCounter = 0;
@@ -51,6 +50,7 @@ class QuestionController extends Controller {
       });
 
       let user = await UserControllers.service.model.find({
+        // _id: req.session["user"]
         _id: ObjectId(req.body.user),
       });
       
@@ -60,7 +60,7 @@ class QuestionController extends Controller {
           chineseCounter = user[0].chineseMarks + 10;
           await UserControllers.service.model.update(
             {
-              _id: ObjectId(req.body.user),
+              _id: ObjectId(req.body.user)
             },
             { chineseMarks: chineseCounter }
           );
@@ -68,7 +68,7 @@ class QuestionController extends Controller {
           englishCounter = user[0].englishMarks + 10;
           await UserControllers.service.model.update(
             {
-              _id: ObjectId(req.body.user),
+              _id: ObjectId(req.body.user)
             },
             { englishMarks: englishCounter }
             );
@@ -76,7 +76,7 @@ class QuestionController extends Controller {
           mathCounter = user[0].mathMarks + 10;
           await UserControllers.service.model.update(
             {
-              _id: ObjectId(req.body.user),
+              _id: ObjectId(req.body.user)
             },
             { mathMarks: mathCounter }
             );
@@ -84,7 +84,7 @@ class QuestionController extends Controller {
           commonCounter = user[0].commonMarks + 10;
           await UserControllers.service.model.update(
             {
-              _id: ObjectId(req.body.user),
+              _id: ObjectId(req.body.user)
             },
             { commonMarks: commonCounter }
             );

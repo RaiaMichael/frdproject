@@ -1,6 +1,5 @@
 import Service from "./Service";
 import { ObjectId } from "mongodb";
- 
 
 class QuestionService extends Service {
   constructor(model) {
@@ -23,7 +22,11 @@ class QuestionService extends Service {
       },
     ];
     try {
-      let item = await this.model.aggregate(pipeline);
+      let item = await this.model.find({
+        subject: ObjectId(body.subject),
+        grade: ObjectId(body.grade),
+      });
+      console.log('QA', item)
 
       if (item)
         return {
@@ -46,33 +49,30 @@ class QuestionService extends Service {
   }
 
   async submitAnswer(body, populate = [], projection = null) {
-   
-   let correct = false
+    let correct = false;
     const pipeline = [
       {
         $match: {
-          _id: ObjectId(body._id)
+          _id: ObjectId(body._id),
         },
       },
     ];
     try {
-
       let item = await this.model.aggregate(pipeline);
       // console.log(item[0].answer)
-  
+
       if (body.answer === item[0].answer) {
-        correct = true
-      
-      }else {
-        correct = false
+        correct = true;
+      } else {
+        correct = false;
       }
-      
+
       if (item)
         return {
           error: false,
           statusCode: 200,
           item,
-          correct
+          correct,
         };
       else
         return {

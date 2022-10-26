@@ -72,7 +72,7 @@ class Controller {
     //   data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
     // }));
 
-    // sheet[0].data.forEach((item) => {t7
+    // sheet[0].data.forEach((item) => {
     //   item.option = [
     //     { choice: "A", content: item["A"] },
     //     { choice: "B", content: item["B"] },
