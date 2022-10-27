@@ -1,4 +1,4 @@
-import Service from "./Service";
+import Service from "./Service.js";
 import { ObjectId } from "mongodb";
 
 class QuestionService extends Service {

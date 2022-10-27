@@ -1,4 +1,4 @@
-import Controller from "./Controller";
+import Controller from "./Controller.js";
 import Subjects from "../models/Subjects.js"
 import SubjectService from "../services/SubjectService.js";
 

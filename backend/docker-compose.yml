@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  project:
+    restart: always
+    environment:
+      PORT: 8080
+      DB_HOST: mongo
+      DB_PORT: 27017
+      DB_NAME: KingOfChickenP
+    depends_on:
+      - mongo
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: "project.michaelraia:latest"
+    ports:
+      - "8080:8080"
+  mongo:
+    image: "mongo"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+    # volumes:
+    #     - ./pgdata:/var/lib/postgresql/data

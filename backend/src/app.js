@@ -3,9 +3,11 @@ import mongoose from "mongoose";
 import routes from "./routes/index.js";
 import cors from "cors";
 import expressSession from 'express-session'
+import "dotenv/config"
+let env = process.env
 
 mongoose
-  .connect("mongodb://localhost:27017/kingOfChickenP", {
+  .connect(`mongodb://${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME}`, {
     useNewUrlParser: true,
   })
   .then(() => {

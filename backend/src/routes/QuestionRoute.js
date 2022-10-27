@@ -1,5 +1,5 @@
 import express from "express";
-import QuestionController from "../controllers/QuestionControllers"
+import QuestionController from "../controllers/QuestionControllers.js"
 
 let router = express.Router();
 

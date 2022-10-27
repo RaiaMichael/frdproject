@@ -1,5 +1,5 @@
 import express from "express";
-import GradeController from "../controllers/GradeControllers"
+import GradeController from "../controllers/GradeControllers.js"
 
 let router = express.Router();
 

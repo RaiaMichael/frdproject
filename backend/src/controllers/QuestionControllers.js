@@ -1,7 +1,7 @@
-import Controller from "./Controller";
+import Controller from "./Controller.js";
 import Questions from "../models/Questions.js";
 import QuestionService from "../services/QuestionService.js";
-import errorHelper from "../helper/errorHelper";
+import errorHelper from "../helper/errorHelper.js";
 import SubjectController from "./SubjectControllers.js";
 import UserControllers from "./UserControllers.js";
 import { ObjectId } from "mongodb";
@@ -16,7 +16,7 @@ class QuestionController extends Controller {
   }
 
   async findQuestion(req, res) {
-    console.log('---------',req.body)
+    // console.log('---------',req.body)
     try {
       
       let response = await this.service.findQuestion(req.body);
@@ -37,7 +37,7 @@ class QuestionController extends Controller {
   }
 
   async submitAnswer(req, res) {
-    console.log(req.session["user"])
+    // console.log(req.session["user"])
     let chineseCounter = 0;
     let englishCounter = 0;
     let mathCounter = 0;

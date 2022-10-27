@@ -1,7 +1,7 @@
-import Controller from "./Controller";
+import Controller from "./Controller.js";
 import Users from "../models/Users.js";
 import UserService from "../services/UserService.js";
-import errorHelper from "../helper/errorHelper";
+import errorHelper from "../helper/errorHelper.js";
 
 const userService = new UserService(new Users().getInstance());
 

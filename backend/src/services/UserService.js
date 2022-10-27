@@ -1,4 +1,4 @@
-import Service from "./Service";
+import Service from "./Service.js";
 import { ObjectId } from "mongodb";
 
 class UserService extends Service {
@@ -67,11 +67,11 @@ class UserService extends Service {
     }
   }
   async register(body, populate = [], projection = null) {
-    console.log('body------',body);
+    // console.log('body------',body);
     
     try {
       let item = await this.model.create(body);
-      console.log(item);
+      // console.log(item);
 
       // return
       if (item.length !== 0) {

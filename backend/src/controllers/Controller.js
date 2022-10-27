@@ -1,4 +1,4 @@
-import errorHelper from "../helper/errorHelper";
+import errorHelper from "../helper/errorHelper.js";
 // import XLSX from "xlsx";
 
 class Controller {

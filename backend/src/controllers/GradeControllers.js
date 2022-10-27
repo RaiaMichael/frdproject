@@ -1,4 +1,4 @@
-import Controller from "./Controller";
+import Controller from "./Controller.js";
 import Grades from "../models/Grades.js"
 import GradeService from "../services/GradeService.js";
 
