@@ -19,13 +19,13 @@ mongoose
         saveUninitialized: true,
       }),
     )
-    const corsOptions = {
-      origin: ["http://localhost:3000"],
-    };
+    // const corsOptions = {
+    //   origin: "*",
+    // };
     
   
     app.use(cors());
-    app.use(cors(corsOptions));
+    // app.use(cors(corsOptions));
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
     routes(app);
